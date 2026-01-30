@@ -1,80 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Dynamic Product Filter</title>
+
 <style>
+  * {
+    box-sizing: border-box;
+  }
+
   body {
     margin: 0;
     font-family: Arial, sans-serif;
     background: #f0f2f5;
     display: flex;
     justify-content: center;
-    padding: 30px 10px;
+    padding: 30px 12px;
   }
 
   .container {
     width: 100%;
-    max-width: 1000px;
+    max-width: 1100px;
   }
 
   h2 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
   }
 
   select {
-    padding: 10px;
-    font-size: 14px;
-    margin-bottom: 20px;
+    display: block;
+    margin: 0 auto 30px;
+    padding: 10px 14px;
+    font-size: 15px;
     border-radius: 6px;
     border: 1px solid #ccc;
+    cursor: pointer;
   }
 
   .products {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 20px;
-    transition: all 0.3s;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
   }
 
   .card {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    padding: 15px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+    padding: 18px;
     text-align: center;
-    transition: transform 0.3s;
+    transition: transform 0.25s ease;
   }
 
   .card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
   }
 
   .card img {
     width: 100%;
-    height: 120px;
+    height: 200px;
     object-fit: cover;
-    border-radius: 6px;
-    margin-bottom: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
   }
 
   .card h3 {
-    font-size: 16px;
-    margin-bottom: 5px;
+    font-size: 17px;
+    margin-bottom: 6px;
   }
 
   .card p {
     font-weight: bold;
     color: #007bff;
+    margin-bottom: 4px;
+  }
+
+  .card small {
+    color: #555;
   }
 </style>
 </head>
+
 <body>
 
 <div id="root" class="container"></div>
 
+<!-- React CDN -->
 <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
@@ -83,31 +96,70 @@
 const { useState } = React;
 
 const productsData = [
-  { id: 1, name: "Laptop", category: "Electronics", price: 50000, img: "https://images.unsplash.com/photo-1587202372775-0f23f383c4b7?auto=format&fit=crop&w=150&q=80" },
-  { id: 2, name: "Headphones", category: "Electronics", price: 2000, img: "https://images.unsplash.com/photo-1583225171039-bd258f00c08b?auto=format&fit=crop&w=150&q=80" },
-  { id: 3, name: "Shoes", category: "Fashion", price: 1500, img: "https://images.unsplash.com/photo-1600180758895-27c0c4264f1b?auto=format&fit=crop&w=150&q=80" },
-  { id: 4, name: "T-Shirt", category: "Fashion", price: 700, img: "https://images.unsplash.com/photo-1581579182637-f658c3a8b6fa?auto=format&fit=crop&w=150&q=80" },
-  { id: 5, name: "Smartphone", category: "Electronics", price: 30000, img: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=150&q=80" },
-  { id: 6, name: "Watch", category: "Accessories", price: 2500, img: "https://images.unsplash.com/photo-1518552781929-392a8c5a53d1?auto=format&fit=crop&w=150&q=80" },
-  { id: 7, name: "Bag", category: "Accessories", price: 1800, img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=150&q=80" },
+  {
+    id: 1,
+    name: "Laptop",
+    category: "Electronics",
+    price: 50000,
+    img: "https://images.unsplash.com/photo-1587202372775-0f23f383c4b7?auto=format&fit=crop&w=600&h=400&q=80"
+  },
+  {
+    id: 2,
+    name: "Headphones",
+    category: "Electronics",
+    price: 2000,
+    img: "https://images.unsplash.com/photo-1583225171039-bd258f00c08b?auto=format&fit=crop&w=600&h=400&q=80"
+  },
+  {
+    id: 3,
+    name: "Shoes",
+    category: "Fashion",
+    price: 1500,
+    img: "https://images.unsplash.com/photo-1600180758895-27c0c4264f1b?auto=format&fit=crop&w=600&h=400&q=80"
+  },
+  {
+    id: 4,
+    name: "T-Shirt",
+    category: "Fashion",
+    price: 700,
+    img: "https://images.unsplash.com/photo-1581579182637-f658c3a8b6fa?auto=format&fit=crop&w=600&h=400&q=80"
+  },
+  {
+    id: 5,
+    name: "Smartphone",
+    category: "Electronics",
+    price: 30000,
+    img: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&h=400&q=80"
+  },
+  {
+    id: 6,
+    name: "Watch",
+    category: "Accessories",
+    price: 2500,
+    img: "https://images.unsplash.com/photo-1518552781929-392a8c5a53d1?auto=format&fit=crop&w=600&h=400&q=80"
+  },
+  {
+    id: 7,
+    name: "Bag",
+    category: "Accessories",
+    price: 1800,
+    img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&h=400&q=80"
+  }
 ];
 
 function ProductFilter() {
   const [filter, setFilter] = useState("All");
 
-  const handleFilterChange = (e) => {
-    setFilter(e.target.value);
-  };
-
   const filteredProducts =
     filter === "All"
       ? productsData
-      : productsData.filter((p) => p.category === filter);
+      : productsData.filter(p => p.category === filter);
 
   return (
     <div>
       <h2>Dynamic Product Filter</h2>
-      <select value={filter} onChange={handleFilterChange}>
+
+      <select value={filter} onChange={(e) => setFilter(e.target.value)}>
         <option value="All">All Categories</option>
         <option value="Electronics">Electronics</option>
         <option value="Fashion">Fashion</option>
@@ -115,7 +167,7 @@ function ProductFilter() {
       </select>
 
       <div className="products">
-        {filteredProducts.map((product) => (
+        {filteredProducts.map(product => (
           <div className="card" key={product.id}>
             <img src={product.img} alt={product.name} />
             <h3>{product.name}</h3>
