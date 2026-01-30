@@ -1,39 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Dynamic Product Filter</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Filter</title>
 
 <style>
-  * {
-    box-sizing: border-box;
-  }
+  * { box-sizing: border-box; }
 
   body {
     margin: 0;
     font-family: Arial, sans-serif;
     background: #f2f4f7;
-    padding: 30px 15px;
-  }
-
-  .container {
-    max-width: 1100px;
-    margin: auto;
+    padding: 30px;
   }
 
   h2 {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
   }
 
   select {
     display: block;
     margin: 0 auto 30px;
-    padding: 10px 14px;
-    font-size: 15px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 16px;
   }
 
   .products {
@@ -44,112 +35,77 @@
 
   .card {
     background: #fff;
-    border-radius: 14px;
-    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
-    padding: 18px;
+    border-radius: 12px;
+    padding: 15px;
     text-align: center;
-    transition: transform 0.25s ease;
-  }
-
-  .card:hover {
-    transform: translateY(-6px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
   }
 
   .card img {
     width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 15px;
-  }
-
-  .card h3 {
-    font-size: 17px;
-    margin-bottom: 6px;
+    height: 180px;
+    border-radius: 8px;
+    margin-bottom: 10px;
   }
 
   .price {
-    font-weight: bold;
     color: #007bff;
-    margin-bottom: 4px;
-  }
-
-  .category {
-    color: #555;
-    font-size: 14px;
+    font-weight: bold;
   }
 </style>
 </head>
 
 <body>
 
-<div id="root" class="container"></div>
+<div id="root"></div>
 
-<!-- React -->
-<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
 <script type="text/babel">
 const { useState } = React;
 
-// SAFE DATA (with real + fallback)
-const productsData = [
-  { id: 1, name: "Laptop", category: "Electronics", price: 50000,
-    img: "https://images.unsplash.com/photo-1587202372775-0f23f383c4b7?auto=format&fit=crop&w=600&q=80" },
-
-  { id: 2, name: "Headphones", category: "Electronics", price: 2000,
-    img: "https://images.unsplash.com/photo-1583225171039-bd258f00c08b?auto=format&fit=crop&w=600&q=80" },
-
-  { id: 3, name: "Shoes", category: "Fashion", price: 1500,
-    img: "https://images.unsplash.com/photo-1600180758895-27c0c4264f1b?auto=format&fit=crop&w=600&q=80" },
-
-  { id: 4, name: "T-Shirt", category: "Fashion", price: 700,
-    img: "https://images.unsplash.com/photo-1581579182637-f658c3a8b6fa?auto=format&fit=crop&w=600&q=80" },
-
-  { id: 5, name: "Smartphone", category: "Electronics", price: 30000,
-    img: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80" },
-
-  { id: 6, name: "Watch", category: "Accessories", price: 2500,
-    img: "https://images.unsplash.com/photo-1518552781929-392a8c5a53d1?auto=format&fit=crop&w=600&q=80" },
-
-  { id: 7, name: "Bag", category: "Accessories", price: 1800,
-    img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80" },
+// ONLY PLACEHOLDER IMAGES (SAFE)
+const products = [
+  { id: 1, name: "Laptop", category: "Electronics", price: 50000 },
+  { id: 2, name: "Headphones", category: "Electronics", price: 2000 },
+  { id: 3, name: "Shoes", category: "Fashion", price: 1500 },
+  { id: 4, name: "T-Shirt", category: "Fashion", price: 700 },
+  { id: 5, name: "Smartphone", category: "Electronics", price: 30000 },
+  { id: 6, name: "Watch", category: "Accessories", price: 2500 },
+  { id: 7, name: "Bag", category: "Accessories", price: 1800 },
 ];
 
 function ProductFilter() {
   const [filter, setFilter] = useState("All");
 
-  const filteredProducts =
+  const filtered =
     filter === "All"
-      ? productsData
-      : productsData.filter(p => p.category === filter);
+      ? products
+      : products.filter(p => p.category === filter);
 
   return (
     <div>
       <h2>Dynamic Product Filter</h2>
 
-      <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-        <option value="All">All Categories</option>
-        <option value="Electronics">Electronics</option>
-        <option value="Fashion">Fashion</option>
-        <option value="Accessories">Accessories</option>
+      <select onChange={e => setFilter(e.target.value)}>
+        <option>All</option>
+        <option>Electronics</option>
+        <option>Fashion</option>
+        <option>Accessories</option>
       </select>
 
       <div className="products">
-        {filteredProducts.map(product => (
-          <div className="card" key={product.id}>
+        {filtered.map(p => (
+          <div className="card" key={p.id}>
             <img
-              src={product.img}
-              alt={product.name}
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = "https://via.placeholder.com/600x400?text=No+Image";
-              }}
+              src={`https://via.placeholder.com/400x300?text=${p.name}`}
+              alt={p.name}
             />
-            <h3>{product.name}</h3>
-            <div className="price">₹{product.price}</div>
-            <div className="category">{product.category}</div>
+            <h3>{p.name}</h3>
+            <div className="price">₹{p.price}</div>
+            <small>{p.category}</small>
           </div>
         ))}
       </div>
@@ -157,8 +113,8 @@ function ProductFilter() {
   );
 }
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<ProductFilter />);
+ReactDOM.createRoot(document.getElementById("root"))
+  .render(<ProductFilter />);
 </script>
 
 </body>
